@@ -43,8 +43,11 @@ function BoxTile(props) {
     const giftbox = {
         backgroundColor: box.boxBackground,
     }
+    const lengthHash = 20
     return (
-        <button className={'card'} style={boxStyle} onClick={props.onClick}>
+        <div>
+            
+            <button className={'card'} style={boxStyle} onClick={props.onClick}>
             <div id="circle" style={circleColor}>
                 <div id="gift">
                     <div id="ribbon" style={ribbon} >
@@ -58,32 +61,36 @@ function BoxTile(props) {
                 </div>
             </div>
         </button>
+        <div style={{fontColor:'white', fontSize:8, textAlign:'center'}}>{'0x'+props.value.substring(0,lengthHash) 
+            + '...'+ props.value.substring(props.value.length-lengthHash,props.value.length)}</div>
+        </div>
+        
     );
 }
 
 
 function getBackColor(value) {
-    return '#' + value.substring(0,6).toString()
+    return '#' + value.substring(0,6).toString() 
 }
 
 function getInnerBackColor(value) {
-    return '#' + value.substring(6,12).toString()
+    return '#' + value.substring(6,12).toString() +"99"
 }
 
 function getBoxBackColor(value) {
-    return '#' + value.substring(12,18).toString()
+    return '#' + value.substring(12,18).toString() +"99"
 }
 
 function getHorizontalRibbonColor(value) {
-    return '#' + value.substring(18,24).toString()
+    return '#' + value.substring(18,24).toString() +"99"
 }
 
 function getVerticalRibbonColor(value) {
-    return '#' + value.substring(24,30)
+    return '#' + value.substring(24,30) +"99"
 }
 
 function getRibbon(value) {
-    return '#' + value.substring(30,36)
+    return '#' + value.substring(30,36) +"99"
 }
 
 
