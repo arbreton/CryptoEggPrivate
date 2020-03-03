@@ -14,6 +14,7 @@ function BoxTile(props) {
     const hash = props.value
 
     const name = props.name
+    const total = props.total
     box.backColor = getBackColor(hash)
     box.innerBackColor = getInnerBackColor(hash)
     box.boxBackground = getBoxBackColor(hash)
@@ -25,7 +26,7 @@ function BoxTile(props) {
 
      <tr>
         <td>{name}</td>
-        <td>0</td>
+    <td>{total}</td>
         <td><button onClick={props.onClick}>
                 Exchange
                 </button></td>

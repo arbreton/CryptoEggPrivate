@@ -10,20 +10,63 @@ import {
 } from '../components/Web3Provider'
 
 const abiArray = JSON.parse('[{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"owners","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_sender","type":"address"}],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"addSignature","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"printALU","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalInCirculation","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnerShip","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"central","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_data","type":"bytes"},{"name":"_custom_fallback","type":"bytes"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"signedOwners","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_data","type":"bytes"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Print","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_old","type":"address"},{"indexed":true,"name":"_new","type":"address"}],"name":"OwnershipTransfered","type":"event"}]')
-const contractAddress = '0x8dde40a78b05b419e27f13f6f8e21d18fca28dc0'
+const contractAddress = '0x869c8FF2A1b60862E7889244F01C8f16cb39DDD8'
 const contract = new web3.eth.Contract(abiArray, contractAddress);
+
+class ListPerson {
+  constructor(name, total, address) {    
+    this.name = name;
+    this.total = total;
+    this.address = address;
+  }
+}
 
 class MainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      listOfPersons: [],
       alus: '',
       sendingAddress: '',
       receivingAddress: '',
     };
   }
 
+  initList() {
+    var address = [
+      '0xB2fcC40FEEe851d26f53E081AA3cBD9980537F1B',
+      '0x6edC9aFA41B8a1Ea7006f085A4483094F45D2675',
+      '0xf9AED95D77792adC39F681e5AddFd27Ede21f490',
+      '0x0c4869fd5A92ed96Aef6EFAeFCfdC1BEe931B67F',
+      '0x9b9e0dD3234c98a4580D051a5a6638804Df8a8C9',
+      '0x6317C09d7D2f13C79273D930eF96E9354c5304B7',
+      '0x6B45E5ce7CF26ace79D025Eb30F45Ce162b587DF',
+      '0xEe5561F1867FA09331C22B891B597b35734B2314',
+      '0x9a3051fe54343cdc7313898e988456CeFc79Eeb6',
+      '0x1b2F4652373Ef0766b108fA234f4cdcB9dfA99Fd',
+    ]
+
+  
+    var listOfPersons = []
+    listOfPersons.push(new ListPerson('Andre', this.getAddressAmount(address[0]), address[0]))
+    listOfPersons.push(new ListPerson('Luis', this.getAddressAmount(address[1]), address[1]))
+    listOfPersons.push(new ListPerson('Nacho', this.getAddressAmount(address[2]), address[2]))
+    listOfPersons.push(new ListPerson('Rafa', this.getAddressAmount(address[3]), address[3]))
+    listOfPersons.push(new ListPerson('Diego', this.getAddressAmount(address[4]), address[4]))
+    listOfPersons.push(new ListPerson('Marcos', this.getAddressAmount(address[5]), address[5]))
+    listOfPersons.push(new ListPerson('Irving', this.getAddressAmount(address[6]), address[6]))
+    listOfPersons.push(new ListPerson('Johann', this.getAddressAmount(address[7]), address[7]))
+    listOfPersons.push(new ListPerson('Abi', this.getAddressAmount(address[8]), address[8]))
+    listOfPersons.push(new ListPerson('Zahory', this.getAddressAmount(address[9]), address[9]))
+
+    console.log(listOfPersons)
+    this.setState({
+      listOfPersons
+    })
+  }
+
   componentDidMount() {
+    this.initList()
     this.setState({
       sendingAddress: getAccount(),
       receivingAddress: getAccount()
@@ -127,12 +170,13 @@ class MainScreen extends React.Component {
     }
   }
 
-  renderSquare(value, name) {
+  renderSquare(value, total, name) {
     return ( 
       <BoxTile
           key={value}
           name={name}
           value={value}
+          total={total}
           onClick={() => this.handleClick(value)}
         ></BoxTile>
     );
@@ -145,50 +189,37 @@ class MainScreen extends React.Component {
     });
   }
 
+
+  getAddressAmount(address) {
+    var addressTotal = 0
+    contract.getPastEvents('Transfer', {
+      //filter: {_from: '0xB2fcC40FEEe851d26f53E081AA3cBD9980537F1B'},
+      fromBlock: 6059167,
+      toBlock: 'latest'
+    })
+    .then(function(events){
+      events.forEach(element => {
+        if (element.returnValues._to == '0x6580B255d1ab50f304f527c198C4912aFf197c08') return
+        if (element.returnValues._from == address) {
+          addressTotal+=element.returnValues._value
+          console.log(element.returnValues._from + " " 
+          +element.returnValues._to + " " +(element.returnValues._value)) 
+        }
+        // same results as the optional callback above
+      })
+    });
+    return addressTotal
+  }
+
   render() {
     // let hashes = []
     // for (let x=0; x<9; x++) {
     //     hashes.push(crypto.randomBytes(32).toString('hex'))
     // }
 
-    var address = [
-      '0xB2fcC40FEEe851d26f53E081AA3cBD9980537F1B',
-      '0x6edC9aFA41B8a1Ea7006f085A4483094F45D2675',
-      '0xf9AED95D77792adC39F681e5AddFd27Ede21f490',
-      '0x0c4869fd5A92ed96Aef6EFAeFCfdC1BEe931B67F',
-      '0x9b9e0dD3234c98a4580D051a5a6638804Df8a8C9',
-      '0x6317C09d7D2f13C79273D930eF96E9354c5304B7',
-      '0x6B45E5ce7CF26ace79D025Eb30F45Ce162b587DF',
-      '0xEe5561F1867FA09331C22B891B597b35734B2314',
-      '0x9a3051fe54343cdc7313898e988456CeFc79Eeb6',
-      '0x1b2F4652373Ef0766b108fA234f4cdcB9dfA99Fd',
-    ]
-
-    var names = [
-      'Andre',
-      'Luis',
-      'Nacho',
-      'Rafa',
-      'Diego',
-      'Marcos',
-      'Irving',
-      'Johann',
-      'Abi',
-      'Zahory',
-    ]
-    // contract.getPastEvents('Transfer', {
-    //   fromBlock: 6059167,
-    //   toBlock: 'latest'
-    // })
-    // .then(function(events){
-    //     console.log(events) // same results as the optional callback above
-    // });
-
     const items = []
-    let index = 0
-    address.forEach(element => {
-      items.push(this.renderSquare(element, names[index]))
-      index++;
+    this.state.listOfPersons.forEach(element => {
+      items.push(this.renderSquare(element.address, element.total, element.name))
     })
     return ( 
       <div>
@@ -203,7 +234,7 @@ class MainScreen extends React.Component {
                         < div style={ { justifyContent: 'center' , } }>
                             <h2> How much you want to Exchange ?
                             </h2>
-                            < input className="inputValue" type="number" pattern="[0-9]*" defaultValue={0} onInput={
+                            < input className="inputValue" type="number" pattern="[0-9]*" defaultValue={20} onInput={
                                 this.handleChange.bind(this) } />
 
                             </div>
@@ -218,7 +249,7 @@ class MainScreen extends React.Component {
                                                     <h1> Name </h1>
                                                 </th>
                                                 < th>
-                                                    < h1> Tx 's Total</h1>
+                                                    < h1> Total Amount Sent </h1>
                                                         </th>
                                                         <th>
                                                             <h1> Address </h1>
