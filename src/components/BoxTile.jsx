@@ -12,61 +12,63 @@ class Box {
 function BoxTile(props) {
     const box = new Box()
     const hash = props.value
+
+    const name = props.name
     box.backColor = getBackColor(hash)
     box.innerBackColor = getInnerBackColor(hash)
     box.boxBackground = getBoxBackColor(hash)
     box.horizontalWrap = getHorizontalRibbonColor(hash)
     box.verticalWrap = getVerticalRibbonColor(hash)
     box.ribbon = getRibbon(hash)
-    const boxStyle = {
-        background: box.backColor,
-    }
-    const circleColor = {
-        backgroundColor: box.innerBackColor,
-        '&::hover' : {
-            backgroundImage: 'radial-gradient('+box.backColor+', '+ box.backColor +' 70%);'
-        }
-    }
-    const ribbonColor = {
-        backgroundColor: box.ribbon,
-    }
-   
-    const horizontalWrap = {
-        backgroundColor: box.horizontalWrap,
-    }
-    const verticalWrap = {
-        backgroundColor: box.verticalWrap,
-    }
-    const ribbon = {
-        backgroundColor: box.innerBackColor,
-    }
-    const giftbox = {
-        backgroundColor: box.boxBackground,
-    }
-    const lengthHash = 20
+
     return (
-        <div>
-            
-            <button className={'card'} style={boxStyle} onClick={props.onClick}>
-            <div id="circle" style={circleColor}>
-                <div id="gift">
-                    <div id="ribbon" style={ribbon} >
-                        <div id="leftEar" style={ribbonColor}></div>
-                        <div id="rightEar" style={ribbonColor}></div>
-                    </div>
-                    <div id="giftbox" style={giftbox}>
-                        <div id="horizontalWrap" style={horizontalWrap}></div>
-                        <div id="verticalWrap" style={verticalWrap}></div>
-                    </div>
-                </div>
-            </div>
-        </button>
-        <div style={{fontColor:'white', fontSize:8, textAlign:'center'}}>{'0x'+props.value.substring(0,lengthHash) 
-            + '...'+ props.value.substring(props.value.length-lengthHash,props.value.length)}</div>
-        </div>
+
+     <tr>
+        <td>{name}</td>
+        <td>0</td>
+        <td><button onClick={props.onClick}>
+                Exchange
+                </button></td>
+      </tr>
         
     );
 }
+
+// function handleClick() {
+//     console.log(getAccount())
+//         console.log(this.state.sendingAddress)
+//         console.log(this.state.receivingAddress)
+//         const address = getAccount()
+//         const ethereum = getEthereum()
+//         if (
+//             //Checks to see if addressses are valid
+//             web3.utils.isAddress(address) &&
+//             web3.utils.isAddress(address)
+//           ) {
+//             const transactionParameters = {
+//                 nonce: '0x00', // ignored by MetaMask
+//                 gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
+//                 gasLimit: '0x2710',  // customizable by user during MetaMask confirmation.
+//                 to: address, // Required except during contract publications.
+//                 from: address, // must match user's active address.
+//                 value: web3.utils.toHex(web3.utils.toWei('.25')), // Only required to send ether to the recipient from the initiating external account.
+//                 data: '', // Optional, but used for defining smart contract creation and interaction.
+//                 chainId: 3 // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
+//               }
+              
+//               ethereum.sendAsync({
+//                 method: 'eth_sendTransaction',
+//                 params: [transactionParameters],
+//                 from: address,
+//               }, () => {
+
+//               })  
+            
+//           } else {
+//             //Alerts if one of the addresses is bad
+//             alert("Bad Address");
+//           }
+// }
 
 
 function getBackColor(value) {
