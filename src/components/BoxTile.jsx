@@ -1,39 +1,104 @@
 import React from 'react';
+import CountUp from 'react-countup';
+import web3 from '../helpers/web3';
 
-class Box {
-    backColor = 0
-    innerBackColor = 0
-    boxBackground = 0
-    horizontalWrap = 0
-    verticalWrap = 0 
-    ribbon = 0
+
+const isSelected = {
+    true: "selected",
+    false: ""
+};
+class BoxTile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+           isSelected: false, 
+           quantity: 0,
+           addressTotal: 0
+        };
+      }
+
+    equals(nextState, state) {
+        return state.addressTotal === nextState.addressTotal && state.quantity === 
+        nextState.quantity && this.state.isSelected === nextState.isSelected
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        return !this.equals(nextState, this.state); // equals() is your implementation
+    }
+
+    handleClick(plus) {
+        var result = this.state.quantity
+        if (plus) {
+            result+=1
+        } else {
+            result-=1
+        }
+        var isSelected = true
+        if (result === 0) isSelected = false
+        if (result < 0) return
+        this.setState({
+            isSelected,
+            quantity: result
+        }) 
+    }
+
+    
+    
+
+    render() {
+        //this.getAddressTotal(this.props.value)
+        const address = this.props.address
+        const name = this.props.name
+        const total = this.props.total
+        const myAddress = this.props.myAddress
+        const inMarket = this.props.inMarket
+
+        const isDisabled = web3.utils.toChecksumAddress(myAddress) 
+        === web3.utils.toChecksumAddress(address)
+
+
+        return (
+
+        <tr className={isSelected[this.state.isSelected]}>
+            {inMarket && <td>{name}</td>}
+            {!inMarket && <td>{name}</td>}
+            <td onClick={()=>{ this.props.increaseAmount(); this.handleClick(true) }}>
+            <CountUp 
+                end={parseInt(total)}
+                duration={2}
+            />
+            </td>
+            {inMarket && <>
+            <td>x {this.state.quantity}</td>
+            </>}
+            <td>
+            {inMarket && <>
+                <button onClick={() => {this.props.decreaseAmount(); this.handleClick(false)}} 
+                disabled={isDisabled}>
+                -
+            </button>
+                <button onClick={() => {this.props.increaseAmount(); this.handleClick(true)}} 
+                    disabled={isDisabled}>
+                    +
+                </button>
+            </>}
+            {!inMarket &&
+                <button onClick={this.props.onClick} 
+                    disabled={isDisabled}>
+                    Send
+                </button>
+            }
+            </td>
+            </tr>
+        );
+        }
 }
 
-function BoxTile(props) {
-    const box = new Box()
-    const hash = props.value
 
-    const name = props.name
-    const total = props.total
-    box.backColor = getBackColor(hash)
-    box.innerBackColor = getInnerBackColor(hash)
-    box.boxBackground = getBoxBackColor(hash)
-    box.horizontalWrap = getHorizontalRibbonColor(hash)
-    box.verticalWrap = getVerticalRibbonColor(hash)
-    box.ribbon = getRibbon(hash)
 
-    return (
-
-     <tr>
-        <td>{name}</td>
-    <td>{total}</td>
-        <td><button onClick={props.onClick}>
-                Exchange
-                </button></td>
-      </tr>
-        
-    );
-}
+// function BoxTile(props) {
+    
+// }
 
 // function handleClick() {
 //     console.log(getAccount())
@@ -70,32 +135,6 @@ function BoxTile(props) {
 //             alert("Bad Address");
 //           }
 // }
-
-
-function getBackColor(value) {
-    return '#' + value.substring(0,6).toString() 
-}
-
-function getInnerBackColor(value) {
-    return '#' + value.substring(6,12).toString() +"99"
-}
-
-function getBoxBackColor(value) {
-    return '#' + value.substring(12,18).toString() +"99"
-}
-
-function getHorizontalRibbonColor(value) {
-    return '#' + value.substring(18,24).toString() +"99"
-}
-
-function getVerticalRibbonColor(value) {
-    return '#' + value.substring(24,30) +"99"
-}
-
-function getRibbon(value) {
-    return '#' + value.substring(30,36) +"99"
-}
-
 
 
 export default BoxTile;
