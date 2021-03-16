@@ -10,7 +10,7 @@ class NavBar extends React.Component {
     return (
       <nav className="nav-wrapper">
           <div className="logo"> 
-              <i className="fas fa-atom"></i> <strong>Klub</strong> 
+              <i className="fas fa-atom"></i> <strong>Giveth Check</strong> 
           </div>
           <div className="burger-icon"><i className="fas fa-bars"></i> MENU</div>
           <ul className="nav-items main-nav mobile-hide">
